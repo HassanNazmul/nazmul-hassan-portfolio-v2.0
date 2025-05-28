@@ -1,0 +1,43 @@
+/**
+ * smooth-scroll.css
+ * Contains styles for smooth scrolling behavior and scroll margin adjustments
+ * Imported by app/globals.css
+ */
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent scroll anchoring issues */
+* {
+  overflow-anchor: none;
+}
+
+/* Ensure smooth transitions for fixed elements */
+.fixed {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+/* Prevent layout shifts during scroll */
+body {
+  overflow-x: hidden;
+}
+
+/* Improve scrolling performance */
+body * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ensure consistent scrollbar width to prevent layout shifts */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Add scroll margin to section headings to account for fixed header */
+section[id],
+div[id] {
+  scroll-margin-top: 80px; /* Adjust based on your header height */
+}

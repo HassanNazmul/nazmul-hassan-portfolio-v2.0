@@ -1,42 +1,229 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Import specialized CSS files */
+@import "../styles/animations.css";
+@import "../styles/scrollbar.css";
+@import "../styles/smooth-scroll.css";
+
+/* Base styles from the original globals.css */
+/* Always reserve space for scrollbar to prevent layout shift */
+html {
+  overflow-y: scroll;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: 0, 80, 255; /* Deep blue instead of purple */
+  --secondary: 0, 229, 255; /* Cyan */
+  --accent: 0, 255, 140; /* Electric green */
+  --background: 0, 0, 0;
+  --foreground: 226, 232, 240;
+  --radius: 0.5rem; /* Add this line to define the radius variable */
+}
+
+@layer base {
+  body {
+    @apply bg-black text-slate-200;
+    background-image: radial-gradient(circle at 25% 10%, rgba(var(--primary), 0.03), transparent 20%),
+      radial-gradient(circle at 75% 30%, rgba(var(--secondary), 0.03), transparent 20%),
+      radial-gradient(circle at 50% 60%, rgba(var(--accent), 0.03), transparent 30%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-orbitron font-bold tracking-wider;
+  }
+
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  section {
+    @apply py-16 md:py-24;
   }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+@layer components {
+  .tech-card {
+    @apply relative overflow-hidden rounded-lg bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 p-6 transition-all duration-300;
+  }
+
+  .tech-card:hover {
+    @apply border-blue-500/50 shadow-[0_0_15px_rgba(0,80,255,0.15)];
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(0, 80, 255, 0.5);
+  }
+
+  .nav-link {
+    @apply relative px-3 py-2 text-slate-300 hover:text-white transition-colors duration-200;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Add a new style for active nav links */
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700 focus:ring-blue-500;
+  }
+
+  .btn-outline {
+    @apply border border-zinc-700 hover:border-blue-500 hover:bg-zinc-800/50 focus:ring-blue-500;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold mb-8 inline-block font-orbitron;
+    background: linear-gradient(to right, #f5f5f5, #00e5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .grid-pattern {
+    background-size: 80px 80px;
+    background-image: linear-gradient(to right, rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-position: center center;
+  }
+
+  .terminal-window {
+    @apply bg-zinc-900/80 border border-zinc-700 rounded-lg p-4 font-mono text-sm;
+  }
+
+  .terminal-header {
+    @apply flex items-center mb-3;
+  }
+
+  .terminal-button {
+    @apply w-3 h-3 rounded-full mr-2;
+  }
+
+  .terminal-line {
+    @apply flex items-start mb-1;
+  }
+
+  .terminal-prompt {
+    @apply text-green-400 mr-2;
+  }
+
+  .terminal-command {
+    @apply text-white;
+  }
+
+  .terminal-output {
+    @apply text-slate-300 pl-4;
+  }
+
+  .terminal-cursor {
+    @apply inline-block w-2 h-4 bg-green-400 ml-1 align-middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  .matrix-bg {
+    @apply absolute inset-0 -z-10 opacity-5;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300e5ff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .terminal-content {
+    @apply overflow-y-auto max-h-80;
+  }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Grid lines */
+.grid-lines {
+  background-size: 80px 80px;
+  background-image: linear-gradient(to right, rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+  background-position: center center;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* Matrix-inspired grid */
+.matrix-grid {
+  position: relative;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.matrix-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(to right, rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: -1;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Scanlines effect */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanlines:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.05) 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Digital rain effect for sections */
+.digital-rain {
+  position: relative;
+}
+
+.digital-rain::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(0deg, rgba(0, 255, 140, 0.03) 25%, transparent 25%);
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

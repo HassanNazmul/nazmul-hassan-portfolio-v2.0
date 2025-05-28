@@ -1,0 +1,122 @@
+/**
+ * animations.css
+ * Contains all animation keyframes and animation utility classes
+ * Imported by app/globals.css
+ */
+
+/* ===== Animation Keyframes ===== */
+
+/* Float animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Blink animation for cursor */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typewriter animation */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* ===== Animation Classes ===== */
+
+/* Float animation */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse animation */
+.pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Typewriter animation */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #0050ff;
+  animation: typewriter 3s steps(40, end) forwards, blink 1s step-end infinite;
+}
+
+/* Animation delay classes */
+.animate-delay-1 {
+  animation-delay: 0.1s;
+}
+.animate-delay-2 {
+  animation-delay: 0.2s;
+}
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}
+.animate-delay-4 {
+  animation-delay: 0.4s;
+}
+.animate-delay-5 {
+  animation-delay: 0.5s;
+}
+.animate-delay-6 {
+  animation-delay: 0.6s;
+}
+.animate-delay-7 {
+  animation-delay: 0.7s;
+}
+.animate-delay-8 {
+  animation-delay: 0.8s;
+}
+.animate-delay-9 {
+  animation-delay: 0.9s;
+}
+.animate-delay-10 {
+  animation-delay: 1s;
+}
+.animate-delay-15 {
+  animation-delay: 1.5s;
+}
+.animate-delay-20 {
+  animation-delay: 2s;
+}

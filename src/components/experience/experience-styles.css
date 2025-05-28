@@ -1,0 +1,499 @@
+/* Experience timeline animations - optimized for performance */
+@keyframes timelineAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes timelineItemStagger {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timeline-container {
+  will-change: opacity, transform;
+  animation: timelineAppear 0.8s ease-out forwards;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  contain: content;
+}
+
+.timeline-item {
+  will-change: opacity, transform;
+  opacity: 0;
+  animation: timelineItemStagger 0.6s ease-out forwards;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  contain: layout style;
+}
+
+/* Timeline dot container */
+.timeline-dot-container {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 10;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Holographic interface container */
+.hologram-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  contain: layout style;
+}
+
+/* Hexagon animation */
+@keyframes hexagonRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hologram-hexagon {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid;
+  opacity: 0.7;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  animation: hexagonRotate 12s linear infinite;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Circle animation */
+@keyframes circleScale {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.hologram-circle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: circleScale 4s ease-in-out infinite;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Core dot */
+.hologram-core {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+}
+
+/* Scanning effect animation */
+@keyframes scanMove {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+.hologram-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 1px;
+  opacity: 0.5;
+  animation: scanMove 2s ease-in-out infinite;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Holographic elements animation */
+@keyframes elementFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-3px);
+    opacity: 0.7;
+  }
+}
+
+.hologram-element {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 1px;
+  opacity: 0.5;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.element-1 {
+  top: 5px;
+  left: 12px;
+  animation: elementFloat 3s ease-in-out infinite;
+}
+
+.element-2 {
+  top: 12px;
+  left: 5px;
+  animation: elementFloat 3s ease-in-out infinite 0.5s;
+}
+
+.element-3 {
+  bottom: 5px;
+  left: 12px;
+  animation: elementFloat 3s ease-in-out infinite 1s;
+}
+
+.element-4 {
+  top: 12px;
+  right: 5px;
+  animation: elementFloat 3s ease-in-out infinite 1.5s;
+}
+
+/* Holographic rings animation */
+@keyframes ringPulse {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+.hologram-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed;
+  opacity: 0.3;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.ring-1 {
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+.ring-2 {
+  top: -4px;
+  left: -4px;
+  width: 32px;
+  height: 32px;
+  animation: ringPulse 4s ease-in-out infinite 2s;
+}
+
+/* Glow effect */
+.hologram-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  opacity: 0.3;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+/* Timeline line styles */
+.timeline-line {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(0, 229, 255, 0.2), rgba(0, 80, 255, 0.2));
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  contain: strict;
+}
+
+/* Timeline item styles - optimized */
+.timeline-content {
+  background-color: rgba(17, 25, 40, 0.75);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  contain: content;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 229, 255, 0.1);
+}
+
+/* Timeline connector styles */
+.timeline-connector {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(to right, rgba(0, 229, 255, 0.5), rgba(0, 80, 255, 0.5));
+  top: 50%;
+  width: 30px;
+  z-index: 2;
+  contain: strict;
+}
+
+.timeline-connector.left {
+  right: -30px;
+}
+
+.timeline-connector.right {
+  left: -30px;
+}
+
+/* Timeline icon styles */
+.timeline-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: 1.5rem;
+  z-index: 5;
+  contain: strict;
+}
+
+.timeline-icon.left {
+  right: -50px;
+}
+
+.timeline-icon.right {
+  left: -50px;
+}
+
+/* Category badges - optimized */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+  font-family: var(--font-jetbrains-mono);
+  position: relative;
+  overflow: hidden;
+  text-shadow: none;
+  /* Force GPU acceleration */
+  transform: translateZ(0);
+  contain: content;
+}
+
+/* Improved glass shine effect for better performance and visual appeal */
+.category-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: skewX(-25deg);
+  animation: badgeShine 6s ease-in-out infinite;
+  will-change: transform;
+  contain: strict;
+}
+
+@keyframes badgeShine {
+  0% {
+    left: -100%;
+  }
+  20%,
+  100% {
+    left: 200%;
+  }
+}
+
+/* Remove the old shine effect that might be causing blurry text */
+.category-badge::after {
+  content: none;
+}
+
+/* Add a subtle border glow effect */
+.category-badge:hover {
+  box-shadow: 0 0 15px rgba(var(--tw-gradient-from-rgb), 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Add stars animation for Experience section */
+.experience-stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.experience-star {
+  position: absolute;
+  background-color: rgba(0, 229, 255, 0.7); /* Cyan stars for Experience section */
+  border-radius: 50%;
+  animation: experienceStarTwinkle 5s infinite ease-in-out;
+  will-change: opacity, transform;
+}
+
+@keyframes experienceStarTwinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.5);
+  }
+}
+
+/* Shooting star animation */
+@keyframes shootingStar {
+  0% {
+    transform: translateX(0) translateY(0) rotate(315deg) scale(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(-20px) translateY(20px) rotate(315deg) scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-100px) translateY(100px) rotate(315deg) scale(0.3);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-100px) translateY(100px) rotate(315deg) scale(0);
+    opacity: 0;
+  }
+}
+
+.experience-shooting-star {
+  position: absolute;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(to right, rgba(0, 229, 255, 0), rgba(0, 229, 255, 0.7));
+  transform-origin: left;
+  animation: shootingStar 10s ease-out infinite;
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+.experience-shooting-star::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(0, 229, 255, 0.7);
+  box-shadow: 0 0 10px 2px rgba(0, 229, 255, 0.5);
+}
+
+/* Add filter button shine effect */
+.filter-button-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: skewX(-25deg);
+  animation: badgeShine 6s ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 20px;
+  }
+
+  .timeline-content {
+    margin-left: 40px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 40px) !important;
+  }
+
+  .timeline-dot-container {
+    left: 20px !important;
+  }
+
+  .timeline-connector {
+    width: 20px;
+  }
+
+  .timeline-connector.left,
+  .timeline-connector.right {
+    left: 20px;
+  }
+
+  .timeline-icon.left,
+  .timeline-icon.right {
+    left: 0;
+  }
+}

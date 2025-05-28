@@ -1,0 +1,98 @@
+/* Projects Terminal Specific Styles */
+.projects-terminal .terminal-content {
+  height: 200px;
+}
+
+/* Terminal cursor blink animation */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.projects-terminal .terminal-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+/* File listing colors - specific to terminal output */
+.projects-terminal .file-permission {
+  @apply text-blue-400;
+}
+
+.projects-terminal .file-name {
+  @apply text-cyan-400;
+}
+
+.projects-terminal .file-size {
+  @apply text-yellow-400;
+}
+
+.projects-terminal .process-message {
+  @apply text-green-400;
+}
+
+/* Project cards animations */
+@keyframes projectCardsAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes projectCardStagger {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-cards-container {
+  will-change: opacity, transform;
+  animation: projectCardsAppear 0.8s ease-out forwards;
+}
+
+.project-card {
+  will-change: opacity, transform;
+  opacity: 0;
+  animation: projectCardStagger 0.6s ease-out forwards;
+}
+
+/* Add stars animation for Projects section */
+.projects-stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.projects-star {
+  position: absolute;
+  background-color: rgba(0, 80, 255, 0.7); /* Blue stars for Projects section */
+  border-radius: 50%;
+  animation: projectsStarTwinkle 5s infinite ease-in-out;
+  will-change: opacity, transform;
+}
+
+@keyframes projectsStarTwinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.5);
+  }
+}

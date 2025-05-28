@@ -1,0 +1,143 @@
+/* Terminal window styling */
+.terminal-window {
+  background-color: rgba(17, 24, 39, 0.8);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  overflow: hidden;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(31, 41, 55, 0.8);
+  border-bottom: 1px solid rgba(75, 85, 99, 0.5);
+}
+
+.terminal-button {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.terminal-content {
+  padding: 0.75rem;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.terminal-line {
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: terminalLineAppear 0.3s ease-out forwards;
+}
+
+.terminal-prompt {
+  color: #10b981; /* green-500 */
+  margin-right: 0.5rem;
+}
+
+.terminal-command {
+  color: #e5e7eb; /* gray-200 */
+}
+
+@keyframes terminalLineAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse animation for availability indicator */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hover effects for contact links */
+.tech-card a {
+  position: relative;
+  display: inline-block;
+}
+
+.tech-card a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to right, #3b82f6, #06b6d4);
+  transition: width 0.3s ease;
+}
+
+.tech-card a:hover::after {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .tech-card {
+    height: auto;
+  }
+}
+
+/* Custom error message styling */
+.error-message {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+  color: #ef4444; /* red-500 */
+  font-size: 0.75rem;
+  font-family: var(--font-jetbrains-mono);
+  animation: errorBlink 2s infinite;
+}
+
+.error-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #ef4444; /* red-500 */
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  animation: errorPulse 2s infinite;
+}
+
+@keyframes errorBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes errorPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Input focus styles for error state */
+input.error-input:focus,
+textarea.error-input:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
