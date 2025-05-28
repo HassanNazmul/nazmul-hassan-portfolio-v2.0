@@ -33,16 +33,16 @@ export const formatEmail = (email: string): string => {
 export const formatSentences = (text: string): string => {
   // First convert everything to lowercase to normalize
   const normalizedText = text.toLowerCase();
-  
+
   // Split by sentence endings but keep the punctuation
   const sentences = normalizedText.split(/([.!?]\s*)/);
-  
+
   let result = '';
   let shouldCapitalize = true;
-  
+
   for (let i = 0; i < sentences.length; i++) {
     const part = sentences[i];
-    
+
     if (part.match(/^[.!?]\s*/)) {
       // This is punctuation + whitespace
       result += part;
@@ -61,7 +61,7 @@ export const formatSentences = (text: string): string => {
       result += part;
     }
   }
-  
+
   return result;
 };
 

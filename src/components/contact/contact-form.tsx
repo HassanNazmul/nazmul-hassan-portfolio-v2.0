@@ -122,17 +122,17 @@ export default function ContactForm() {
 
     // Sanitize input as user types
     const sanitizedValue = sanitizeInput(value)
-    
+
     // Apply grammar formatting in real-time
     const formattedValue = formatField(sanitizedValue, name as 'name' | 'email' | 'subject' | 'message')
-    
+
     setFormData((prev) => ({ ...prev, [name]: formattedValue }))
-    
+
     // Clear error for this field when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }))
     }
-    
+
     // Real-time validation for sophisticated feedback
     validateFieldInRealTime(name, formattedValue) // Use formatted value for validation
   }
@@ -237,7 +237,7 @@ export default function ContactForm() {
   useEffect(() => {
     // Only focus on errors if we just attempted to submit the form
     if (!isSubmitting) return
-    
+
     const errorFields = Object.keys(errors)
     if (errorFields.length > 0 && formRef.current) {
       const firstErrorField = errorFields[0]
@@ -251,9 +251,10 @@ export default function ContactForm() {
   }, [errors, isSubmitting]) // Add isSubmitting dependency
 
   // Handle form submission with security checks
+  // Replace the existing handleSubmit function with this:
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-
+  
     // Check if honeypot field is filled (bot detection)
     if (formData.honeypot) {
       console.warn("Bot submission detected")
@@ -264,23 +265,23 @@ export default function ContactForm() {
       setSubmitStatus("success")
       return
     }
-
+  
     // Rate limiting
     const now = Date.now()
     if (now - lastSubmissionTime < 10000 && submissionAttempts > 2) {
       setErrors({ general: SECURITY_ERRORS.RATE_LIMIT })
       return
     }
-
+  
     // Update submission tracking
     setSubmissionAttempts((prev) => prev + 1)
     setLastSubmissionTime(now)
-
+  
     // Validate form
     if (!validateForm()) {
       return
     }
-
+  
     setIsSubmitting(true)
     setTerminalLines([
       "Initializing secure contact request...",
@@ -291,24 +292,43 @@ export default function ContactForm() {
       "Encrypting message content...",
       "Establishing secure connection...",
     ])
-
-    // Simulate form submission with security checks
+  
     try {
-      // In a real implementation, you would send the security token with the request
-      // for CSRF protection
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      setTerminalLines((prev) => [...prev, "Security verification complete", "Message delivered successfully!"])
-      setSubmitStatus("success")
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        honeypot: "",
+      // Send email via API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          securityToken: securityToken,
+        }),
       })
-
-      // Generate a new security token after successful submission
-      setSecurityToken(generateSecurityToken())
+  
+      if (response.ok) {
+        setTerminalLines((prev) => [
+          ...prev,
+          "Security verification complete",
+          "Message delivered successfully!"
+        ])
+        setSubmitStatus("success")
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+          honeypot: "",
+        })
+        
+        // Generate a new security token after successful submission
+        setSecurityToken(generateSecurityToken())
+      } else {
+        throw new Error('Failed to send email')
+      }
     } catch (error) {
       setTerminalLines((prev) => [...prev, "Error: Message delivery failed."])
       setSubmitStatus("error")
@@ -363,9 +383,8 @@ export default function ContactForm() {
               value={formData.name}
               onChange={handleChange}
               maxLength={50}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
-                errors.name ? "border-red-500" : "border-zinc-700"
-              } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.name ? "border-red-500" : "border-zinc-700"
+                } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
               placeholder={errors.name || "John Doe"}
               aria-invalid={errors.name ? "true" : "false"}
               aria-describedby={errors.name ? "name-error" : undefined}
@@ -390,9 +409,8 @@ export default function ContactForm() {
               value={formData.email}
               onChange={handleChange}
               maxLength={100}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
-                errors.email ? "border-red-500" : "border-zinc-700"
-              } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.email ? "border-red-500" : "border-zinc-700"
+                } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
               placeholder={errors.email || "Yourmail@domain.co.uk"}
               aria-invalid={errors.email ? "true" : "false"}
               aria-describedby={errors.email ? "email-error" : undefined}
@@ -418,9 +436,8 @@ export default function ContactForm() {
               value={formData.subject}
               onChange={handleChange}
               maxLength={100}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
-                errors.subject ? "border-red-500" : "border-zinc-700"
-              } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.subject ? "border-red-500" : "border-zinc-700"
+                } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
               placeholder={errors.subject || "Project Inquiry"}
               aria-invalid={errors.subject ? "true" : "false"}
               aria-describedby={errors.subject ? "subject-error" : undefined}
@@ -445,9 +462,8 @@ export default function ContactForm() {
               onChange={handleChange}
               rows={5}
               maxLength={1000}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
-                errors.message ? "border-red-500" : "border-zinc-700"
-              } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none font-mono`}
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.message ? "border-red-500" : "border-zinc-700"
+                } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none font-mono`}
               placeholder={errors.message || "Your message here..."}
               aria-invalid={errors.message ? "true" : "false"}
               aria-describedby={errors.message ? "message-error" : undefined}
