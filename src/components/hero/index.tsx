@@ -111,13 +111,13 @@ function Hero() {
 
       // Open the CV after all messages are displayed
       setTimeout(() => {
-        window.open("/cv.pdf", "_blank", "noopener,noreferrer")
+        window.open("/NazmulHassanResume.pdf", "_blank", "noopener,noreferrer")
         // Reset loading state
         setIsGeneratingCV(false)
       }, totalDelay + 500)
     } else {
       // Fallback if terminal command function isn't available
-      window.open("/cv.pdf", "_blank", "noopener,noreferrer")
+      window.open("/NazmulHassanResume.pdf", "_blank", "noopener,noreferrer")
       // Reset loading state
       setIsGeneratingCV(false)
     }
@@ -162,7 +162,7 @@ function Hero() {
                 Get in touch <ArrowRight className="ml-2 h-4 w-4" />
               </a>
               <a
-                href="/cv.pdf"
+                href="/NazmulHassanResume.pdf"
                 onClick={handleViewCV}
                 className={`btn btn-outline font-mono ${isNavbarLocked ? "pointer-events-none opacity-70" : ""}`}
               >
