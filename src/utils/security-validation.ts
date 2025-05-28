@@ -14,7 +14,7 @@ export function sanitizeInput(input: string): string {
     .replace(/'/g, "&#x27;")
     .replace(/\//g, "&#x2F;")
     .replace(/`/g, "&#x60;")
-    .trim()
+    // .trim()
 }
 
 // Validate input against common attack patterns

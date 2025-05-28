@@ -5,6 +5,7 @@ import { useState, useRef, useEffect, type FormEvent } from "react"
 import { Send, Shield } from "lucide-react"
 import TerminalOutput from "./terminal-output"
 import { sanitizeInput } from "@/utils/security-validation"
+import { formatField } from "@/utils/text-formatting"
 
 // Define validation patterns
 const VALIDATION_PATTERNS = {
@@ -121,16 +122,19 @@ export default function ContactForm() {
 
     // Sanitize input as user types
     const sanitizedValue = sanitizeInput(value)
-
-    setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
-
+    
+    // Apply grammar formatting in real-time
+    const formattedValue = formatField(sanitizedValue, name as 'name' | 'email' | 'subject' | 'message')
+    
+    setFormData((prev) => ({ ...prev, [name]: formattedValue }))
+    
     // Clear error for this field when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }))
     }
-
+    
     // Real-time validation for sophisticated feedback
-    validateFieldInRealTime(name, sanitizedValue)
+    validateFieldInRealTime(name, formattedValue) // Use formatted value for validation
   }
 
   // Validate a single field in real-time
@@ -229,8 +233,11 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  // Focus the first field with an error
+  // Focus the first field with an error (only after form submission)
   useEffect(() => {
+    // Only focus on errors if we just attempted to submit the form
+    if (!isSubmitting) return
+    
     const errorFields = Object.keys(errors)
     if (errorFields.length > 0 && formRef.current) {
       const firstErrorField = errorFields[0]
@@ -241,7 +248,7 @@ export default function ContactForm() {
         }
       }
     }
-  }, [errors])
+  }, [errors, isSubmitting]) // Add isSubmitting dependency
 
   // Handle form submission with security checks
   const handleSubmit = async (e: FormEvent) => {
@@ -386,7 +393,7 @@ export default function ContactForm() {
               className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
                 errors.email ? "border-red-500" : "border-zinc-700"
               } text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-mono`}
-              placeholder={errors.email || "john@example.com"}
+              placeholder={errors.email || "Yourmail@domain.co.uk"}
               aria-invalid={errors.email ? "true" : "false"}
               aria-describedby={errors.email ? "email-error" : undefined}
               autoComplete="email"
