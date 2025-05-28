@@ -117,7 +117,7 @@ export default function Experience() {
         {
           threshold: 0.1,
           // Use passive option for better performance
-          passive: true,
+          // passive: true,
         },
       )
     }

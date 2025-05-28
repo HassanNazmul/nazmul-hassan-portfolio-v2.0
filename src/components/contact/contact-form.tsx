@@ -56,14 +56,21 @@ export default function ContactForm() {
   const [submissionAttempts, setSubmissionAttempts] = useState(0)
   const [lastSubmissionTime, setLastSubmissionTime] = useState(0)
   const formRef = useRef<HTMLFormElement>(null)
-  const securityToken = useRef<string>(generateSecurityToken())
+  const [securityToken, setSecurityToken] = useState<string>('')
 
   // Generate a security token for CSRF protection
   function generateSecurityToken() {
-    return Array.from(window.crypto.getRandomValues(new Uint8Array(16)))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("")
+    if (typeof window !== 'undefined') {
+      return Array.from(window.crypto.getRandomValues(new Uint8Array(16)))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("")
+    }
+    return ''
   }
+
+  useEffect(() => {
+    setSecurityToken(generateSecurityToken())
+  }, [])
 
   // Check for suspicious patterns in input
   const containsSuspiciousPatterns = (input: string): boolean => {
@@ -294,7 +301,7 @@ export default function ContactForm() {
       })
 
       // Generate a new security token after successful submission
-      securityToken.current = generateSecurityToken()
+      setSecurityToken(generateSecurityToken())
     } catch (error) {
       setTerminalLines((prev) => [...prev, "Error: Message delivery failed."])
       setSubmitStatus("error")
@@ -308,7 +315,7 @@ export default function ContactForm() {
       <h3 className="text-2xl font-semibold text-white mb-6 font-orbitron flex items-center">
         <Send className="h-5 w-5 mr-2 text-cyan-500" />
         Send a Message
-        <Shield className="h-4 w-4 ml-2 text-green-400" title="Secure Form" />
+        <Shield className="h-4 w-4 ml-2 text-green-400" aria-label="Secure Form" />
       </h3>
 
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
@@ -327,7 +334,7 @@ export default function ContactForm() {
         </div>
 
         {/* Hidden CSRF token field */}
-        <input type="hidden" name="_token" value={securityToken.current} />
+        <input type="hidden" name="_token" value={securityToken} />  {/* ✅ Fixed: Remove .current */}
 
         {/* General error message */}
         {errors.general && (

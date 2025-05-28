@@ -43,7 +43,7 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div
           className={`transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
-          ref={sectionRef}
+          ref={sectionRef as React.RefObject<HTMLDivElement>}
         >
           <ContactInfo />
         </div>
