@@ -332,6 +332,10 @@ export default function ContactForm() {
     } catch (error) {
       setTerminalLines((prev) => [...prev, "Error: Message delivery failed."])
       setSubmitStatus("error")
+      // Log error to console only in development mode
+      if (process.env.NODE_ENV === 'development') {
+        console.error("Submission error:", error);
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -512,7 +516,7 @@ export default function ContactForm() {
 
         {submitStatus === "success" && !isSubmitting && (
           <div className="p-3 rounded-lg bg-green-500/20 border border-green-500/30 text-green-400 text-sm font-mono">
-            Your message has been sent successfully. I'll get back to you soon!
+            Your message has been sent successfully. I&#39;ll get back to you soon!
           </div>
         )}
 

@@ -20,13 +20,15 @@ export default function Contact() {
       { threshold: 0.1 },
     )
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+    const currentRef = sectionRef.current; // Capture the current ref value
+
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
+      if (currentRef) { // Use the captured value in cleanup
+        observer.unobserve(currentRef)
       }
     }
   }, [])
