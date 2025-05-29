@@ -10,7 +10,7 @@ function TypewriterText({ roles }: TypewriterTextProps) {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0)
   const [currentText, setCurrentText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
-  const [typingSpeed, setTypingSpeed] = useState(100)
+  const [typingSpeed] = useState(100)
   const typingDelayRef = useRef<NodeJS.Timeout | null>(null)
 
   // Effect to handle the typing animation

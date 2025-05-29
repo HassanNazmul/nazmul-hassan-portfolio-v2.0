@@ -99,7 +99,7 @@ function Philosophy() {
 
                     <blockquote className="relative z-10">
                       <p className="text-lg md:text-xl font-medium text-white leading-relaxed font-orbitron mb-4 quote-text">
-                        "The best among you are those who bring the greatest benefits to others."
+                        &#34;The best among you are those who bring the greatest benefits to others&#34;
                       </p>
                       <footer className="flex items-center justify-end">
                         <div className="w-8 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 mr-2"></div>

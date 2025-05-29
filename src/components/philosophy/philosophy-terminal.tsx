@@ -12,7 +12,7 @@ function PhilosophyTerminal() {
   const [isTypingCommand, setIsTypingCommand] = useState(true)
   const [outputLines, setOutputLines] = useState<string[]>([])
   const [currentLine, setCurrentLine] = useState(0)
-  const [isInView, setIsInView] = useState(false)
+  // const [isInView, setIsInView] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
   const [cursorVisible, setCursorVisible] = useState(true)
   const terminalRef = useRef<HTMLDivElement>(null)
@@ -25,16 +25,16 @@ function PhilosophyTerminal() {
   const [currentCommand, setCurrentCommand] = useState("")
   const [isTypingSubCommand, setIsTypingSubCommand] = useState(false)
   const [currentCommandIndex, setCurrentCommandIndex] = useState(-1)
-  const [commandsToType, setCommandsToType] = useState<string[]>(philosophyCommandsToType)
+  const [commandsToType] = useState<string[]>(philosophyCommandsToType)
 
-  const currentDate = new Date()
-    .toLocaleString("en-US", {
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-    .replace(/,/g, "")
+  // const currentDate = new Date()
+  //   .toLocaleString("en-US", {
+  //     month: "short",
+  //     day: "2-digit",
+  //     hour: "2-digit",
+  //     minute: "2-digit",
+  //   })
+  //   .replace(/,/g, "")
 
   // Memoize terminal outputs to prevent recreation
   const terminalOutputs = useRef(philosophyTerminalOutputs).current
@@ -61,7 +61,8 @@ function PhilosophyTerminal() {
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         // Set isInView state based on intersection
-        setIsInView(entry.isIntersecting)
+
+        // setIsInView(entry.isIntersecting)
 
         // If terminal comes into view and hasn't started yet, mark it as started
         if (entry.isIntersecting && !hasStarted) {
@@ -151,8 +152,8 @@ function PhilosophyTerminal() {
       // Different timing for different types of output
       const delay =
         terminalOutputs[currentLine].startsWith("#") ||
-        terminalOutputs[currentLine].startsWith("===") ||
-        terminalOutputs[currentLine].startsWith("---")
+          terminalOutputs[currentLine].startsWith("===") ||
+          terminalOutputs[currentLine].startsWith("---")
           ? 800 // Slower for headers and separators
           : terminalOutputs[currentLine] === ""
             ? 300 // Medium for empty lines
