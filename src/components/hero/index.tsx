@@ -22,7 +22,7 @@ function Hero() {
   // Array of roles for the typewriter effect
   const roles = ["Software Engineer", "Back End Developer", "Machine Learning Engineer", "AI Agent Developer"]
   const [terminalComplete, setTerminalComplete] = useState(false)
-  const { isHeroTerminalComplete, setHeroTerminalComplete, isNavbarLocked } = useTerminal()
+  const { setHeroTerminalComplete, isNavbarLocked } = useTerminal()
   const [isGeneratingCV, setIsGeneratingCV] = useState(false)
 
   // Effect to prevent scrolling until terminal execution is complete
@@ -78,7 +78,7 @@ function Hero() {
       document.body.style.top = ""
       document.body.style.width = ""
     }
-  }, [terminalComplete])
+  }, [terminalComplete, ENABLE_PAGE_LOCKING]) // Add ENABLE_PAGE_LOCKING to dependency array
 
   // Add a new useEffect to set the initial URL hash to #home
   useEffect(() => {
@@ -102,8 +102,13 @@ function Hero() {
     // Set loading state
     setIsGeneratingCV(true)
 
-    // Get the addCommand function from the window object
-    const terminalAddCommand = (window as any).terminalAddCommand
+    // Define proper interface for window extension
+    interface WindowWithTerminal extends Window {
+      terminalAddCommand?: (command: string, outputs: string[]) => number
+    }
+
+    // Get the addCommand function from the window object with proper typing
+    const terminalAddCommand = (window as WindowWithTerminal).terminalAddCommand
 
     if (terminalAddCommand) {
       // Execute the command in the terminal
@@ -136,7 +141,7 @@ function Hero() {
             </div>
 
             <h1 className="font-orbitron leading-tight">
-              <span className="text-2xl sm:text-3xl md:text-2xl block">Hi, I'm</span>
+              <span className="text-2xl sm:text-3xl md:text-2xl block">Hi, I&#39;m</span>
               <span className="text-4xl sm:text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 whitespace-nowrap">
                 Nazmul Hassan
               </span>
@@ -188,7 +193,7 @@ function Hero() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Building CV <FileText className="ml-2 h-4 w-4" />
+                    Building CV&#39;s <FileText className="ml-2 h-4 w-4" />
                   </span>
                 ) : (
                   <span className="flex items-center">

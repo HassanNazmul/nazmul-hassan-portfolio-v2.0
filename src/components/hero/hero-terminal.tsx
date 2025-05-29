@@ -5,12 +5,13 @@ import { useTerminal } from "@/contexts/terminal-context"
 // Update the import to reflect the function call
 import { heroTerminalCommand, heroTerminalOutputs } from "@/data/terminal-messages/hero"
 
-interface HeroTerminalProps {
-  onInitComplete?: () => void
-}
+// Remove unused interface
+// interface HeroTerminalProps {
+//   onInitComplete?: () => void
+// }
 
 // Create a memoized terminal line component
-const TerminalLine = memo(({ line, index }: { line: string; index: number }) => {
+const TerminalLine = memo(({ line }: { line: string }) => {
   // Helper function to format different types of terminal output with syntax highlighting
   const formatOutput = (text: string) => {
     // System messages and status updates
@@ -97,7 +98,7 @@ function HeroTerminal({
   const [isTypingCommand, setIsTypingCommand] = useState(true)
   const [outputLines, setOutputLines] = useState<string[]>([])
   const [currentLine, setCurrentLine] = useState(0)
-  const [hasStarted, setHasStarted] = useState(true) // Auto-start for hero section
+  const [hasStarted] = useState(true)
   const terminalRef = useRef<HTMLDivElement>(null)
   const animationFrameRef = useRef<number | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -288,10 +289,14 @@ function HeroTerminal({
     return delay // Return the total delay for chaining
   }
 
-  // Expose the addCommand method
+  // Expose the addCommand method with proper typing
   useEffect(() => {
     if (typeof window !== "undefined") {
-      ;(window as any).terminalAddCommand = handleAddCommand
+      // Define proper interface for window extension
+      interface WindowWithTerminal extends Window {
+        terminalAddCommand?: (command: string, outputs: string[]) => number
+      }
+      ; (window as WindowWithTerminal).terminalAddCommand = handleAddCommand
     }
   }, [])
 
@@ -322,7 +327,7 @@ function HeroTerminal({
               animation: "none",
             }}
           >
-            <TerminalLine line={line} index={index} />
+            <TerminalLine line={line} />
           </div>
         ))}
 
