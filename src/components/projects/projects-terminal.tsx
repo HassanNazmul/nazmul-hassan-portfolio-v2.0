@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef, memo } from "react"
-import { projects } from "@/data/projects"
 import { projectsTerminalCommand, projectsTerminalOutputs } from "@/data/terminal-messages/projects"
 
 interface ProjectsTerminalProps {
@@ -58,9 +57,9 @@ function ProjectsTerminal({ onCloneComplete }: ProjectsTerminalProps) {
   const [isTypingCommand, setIsTypingCommand] = useState(true)
   const [outputLines, setOutputLines] = useState<string[]>([])
   const [currentLine, setCurrentLine] = useState(0)
-  const [isInView, setIsInView] = useState(false)
+  // const [isInView, setIsInView] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
-  const [cloneComplete, setCloneComplete] = useState(false)
+  // const [cloneComplete, setCloneComplete] = useState(false)
   const terminalRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -69,22 +68,6 @@ function ProjectsTerminal({ onCloneComplete }: ProjectsTerminalProps) {
 
   // Update the terminalOutputs array to use dynamic timestamps
   const fullCommand = projectsTerminalCommand
-  // Update to use 24-hour time format
-  const currentDateTime = new Date()
-    .toLocaleString("en-GB", {
-      month: "short",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    })
-    .replace(/,/g, "")
-
-  // Generate project file listings dynamically from the projects data
-  const projectFileListings = projects.map(
-    (project) =>
-      `-rw-r--r--  1 nazmul  staff  ${(Math.random() * 3 + 1.5).toFixed(1)}K ${currentDateTime} ${project.title.toLowerCase().replace(/\s+/g, "-")}.project`,
-  )
 
   // Memoize terminal outputs to prevent recreation
   const terminalOutputs = useRef(projectsTerminalOutputs()).current
@@ -96,7 +79,7 @@ function ProjectsTerminal({ onCloneComplete }: ProjectsTerminalProps) {
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         // Set isInView state based on intersection
-        setIsInView(entry.isIntersecting)
+        // setIsInView(entry.isIntersecting)
 
         // If terminal comes into view and hasn't started yet, mark it as started
         if (entry.isIntersecting && !hasStarted) {
@@ -173,7 +156,7 @@ function ProjectsTerminal({ onCloneComplete }: ProjectsTerminalProps) {
 
         // Check if this is the last line (clone complete)
         if (currentLine === terminalOutputs.length - 1) {
-          setCloneComplete(true)
+          // setCloneComplete(true)
           // Add a small delay before triggering the callback
           setTimeout(() => {
             onCloneComplete()
@@ -194,8 +177,8 @@ function ProjectsTerminal({ onCloneComplete }: ProjectsTerminalProps) {
       // Different timing for different types of output
       const delay =
         terminalOutputs[currentLine].startsWith("Cloning") ||
-        terminalOutputs[currentLine].startsWith("Projects successfully") ||
-        terminalOutputs[currentLine].startsWith("# Nazmul")
+          terminalOutputs[currentLine].startsWith("Projects successfully") ||
+          terminalOutputs[currentLine].startsWith("# Nazmul")
           ? 800 // Slower for important messages
           : terminalOutputs[currentLine].startsWith("$")
             ? 600 // Medium for commands

@@ -13,7 +13,6 @@ export type { Project }
 export default function Projects() {
   const [visibleProjects, setVisibleProjects] = useState<number[]>([])
   const [cloneComplete, setCloneComplete] = useState(false)
-  const projectRefs = useRef<(HTMLDivElement | null)[]>([])
   const starsRef = useRef<HTMLDivElement>(null)
 
   // Create animated stars background

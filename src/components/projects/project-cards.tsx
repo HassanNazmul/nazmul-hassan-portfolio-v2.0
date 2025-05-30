@@ -44,7 +44,6 @@ function ProjectCards({ projects, visibleProjects }: ProjectCardsProps) {
   const [filter, setFilter] = useState<"all" | "ml" | "web" | "data">("all")
   const [windowWidth, setWindowWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 0)
   const containerRef = useRef<HTMLDivElement>(null)
-  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Handle window resize with throttling
   useEffect(() => {
@@ -144,13 +143,12 @@ const FilterButton = memo(
     return (
       <button
         onClick={onClick}
-        className={`px-4 py-2 text-sm rounded-md transition-all font-mono flex items-center ${
-          active
-            ? icon
-              ? `bg-gradient-to-r ${color} text-white`
-              : "bg-blue-600 text-white"
-            : "bg-zinc-800/70 text-slate-300 hover:bg-zinc-700/70 hover:text-white"
-        }`}
+        className={`px-4 py-2 text-sm rounded-md transition-all font-mono flex items-center ${active
+          ? icon
+            ? `bg-gradient-to-r ${color} text-white`
+            : "bg-blue-600 text-white"
+          : "bg-zinc-800/70 text-slate-300 hover:bg-zinc-700/70 hover:text-white"
+          }`}
       >
         {icon && <span className={active ? "text-white" : iconColor}>{icon}</span>}
         {label}
@@ -197,9 +195,8 @@ function ProjectCard({
   return (
     <div
       data-index={index}
-      className={`relative overflow-hidden rounded-lg bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 project-card group ${
-        project.featured ? config.borderColor : ""
-      } ${isVisible ? "animate-fadeIn" : "opacity-0"}`}
+      className={`relative overflow-hidden rounded-lg bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 project-card group ${project.featured ? config.borderColor : ""
+        } ${isVisible ? "animate-fadeIn" : "opacity-0"}`}
       style={{
         animationDelay: `${delay}s`,
         contain: "content",
