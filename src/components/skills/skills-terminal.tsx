@@ -9,7 +9,7 @@ interface SkillsTerminalProps {
 }
 
 // Create a memoized terminal line component
-const TerminalLine = memo(({ line, index }: { line: string; index: number }) => {
+const TerminalLine = memo(({ line }: { line: string; index: number }) => {
   // Helper function to format file listing with proper styling
   const formatFileListing = (text: string) => {
     if (text.endsWith(".skill") || text.endsWith(".") || text.endsWith("..")) {
@@ -49,9 +49,9 @@ function SkillsTerminal({ onAnalysisComplete }: SkillsTerminalProps) {
   const [isTypingCommand, setIsTypingCommand] = useState(true)
   const [outputLines, setOutputLines] = useState<string[]>([])
   const [currentLine, setCurrentLine] = useState(0)
-  const [isInView, setIsInView] = useState(false)
+  // const [isInView, setIsInView] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
-  const [analysisComplete, setAnalysisComplete] = useState(false)
+  // const [analysisComplete, setAnalysisComplete] = useState(false)
   const terminalRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -69,7 +69,7 @@ function SkillsTerminal({ onAnalysisComplete }: SkillsTerminalProps) {
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         // Set isInView state based on intersection
-        setIsInView(entry.isIntersecting)
+        // setIsInView(entry.isIntersecting)
 
         // If terminal comes into view and hasn't started yet, mark it as started
         if (entry.isIntersecting && !hasStarted) {
@@ -132,7 +132,7 @@ function SkillsTerminal({ onAnalysisComplete }: SkillsTerminalProps) {
 
         // Check if this is the last line (analysis complete)
         if (currentLine === terminalOutputs.length - 1) {
-          setAnalysisComplete(true)
+          // setAnalysisComplete(true)
           // Add a small delay before triggering the callback
           setTimeout(() => {
             onAnalysisComplete()
@@ -153,10 +153,10 @@ function SkillsTerminal({ onAnalysisComplete }: SkillsTerminalProps) {
       // Different timing for different types of output
       const delay =
         terminalOutputs[currentLine].startsWith("Analyzing") ||
-        terminalOutputs[currentLine].startsWith("Scanning") ||
-        terminalOutputs[currentLine].startsWith("Evaluating") ||
-        terminalOutputs[currentLine].startsWith("Generating") ||
-        terminalOutputs[currentLine].startsWith("Skills analysis")
+          terminalOutputs[currentLine].startsWith("Scanning") ||
+          terminalOutputs[currentLine].startsWith("Evaluating") ||
+          terminalOutputs[currentLine].startsWith("Generating") ||
+          terminalOutputs[currentLine].startsWith("Skills analysis")
           ? 800 // Slower for processing messages
           : terminalOutputs[currentLine] === ""
             ? 300 // Medium for empty lines
