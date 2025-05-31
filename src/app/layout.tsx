@@ -17,11 +17,13 @@ const orbitron = Orbitron({
 })
 
 export const metadata: Metadata = {
-  title: "Nazmul Hassan | ML Engineer & Developer",
+  title:
+    "Software Engineer | Python Developer | Machine Learning & AI Engineer | AI Agent Builder | MSc AI (QMUL)",
   description:
     "Portfolio of Nazmul Hassan - Machine Learning Engineer, AI Specialist, Data Scientist, and Backend Developer",
-    generator: 'v0.dev'
-}
+  keywords:
+    "Nazmul Hassan, Software Engineer, Python Developer, Machine Learning Engineer, AI Specialist, Data Scientist, Backend Developer, AI Agent Builder, MSc AI QMUL",
+};
 
 // Wrap the children with TerminalProvider in the RootLayout component
 export default function RootLayout({
